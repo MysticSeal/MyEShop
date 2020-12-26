@@ -8,7 +8,7 @@ using MyEShop.Core.Models;
 
 namespace MyEShop.DataAccess.InMemory
 {
-    class ProductRepository
+    public class ProductRepository
     {
         ObjectCache cache = MemoryCache.Default;
         List<Product> products = new List<Product>();
@@ -66,7 +66,7 @@ namespace MyEShop.DataAccess.InMemory
             return products.AsQueryable(); 
         }
 
-        public void delete(string id)
+        public void Delete(string id)
         {
             Product productToDelete = products.Find(p => p.Id == id);
             if (productToDelete != null)
