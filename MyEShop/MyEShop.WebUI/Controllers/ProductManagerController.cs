@@ -11,13 +11,13 @@ namespace MyEShop.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        ProductRepository context;
-        ProductCategoryRepository contextCategory; 
+        InMemoryRepository<Product> context;
+        InMemoryRepository<ProductCategory> contextCategory; 
 
         public ProductManagerController()
         {
-            context = new ProductRepository();
-            contextCategory = new ProductCategoryRepository();
+            context = new InMemoryRepository<Product>();
+            contextCategory = new InMemoryRepository<ProductCategory>();
         }
 
         // GET: ProductManager
@@ -86,7 +86,7 @@ namespace MyEShop.WebUI.Controllers
 
                 editProduct.Category = product.Category;
                 editProduct.Description = product.Description;
-                editProduct.Id = id;
+                editProduct.id = id;
                 editProduct.Image = product.Image;
                 editProduct.Name = product.Name;
                 editProduct.Price = product.Price;
