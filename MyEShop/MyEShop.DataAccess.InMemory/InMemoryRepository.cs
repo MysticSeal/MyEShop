@@ -1,4 +1,5 @@
 ﻿using MyEShop.Core;
+using MyEShop.Core.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MyEShop.DataAccess.InMemory
 {
-    public class InMemoryRepository<T> where T : BaseEntity 
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity
     {
         ObjectCache cache = MemoryCache.Default;
         List<T> items;
@@ -18,7 +19,7 @@ namespace MyEShop.DataAccess.InMemory
         {
             className = typeof(T).Name;
             items = cache[className] as List<T>;
-            if(items == null)
+            if (items == null)
             {
                 items = new List<T>();
             }
@@ -65,21 +66,21 @@ namespace MyEShop.DataAccess.InMemory
 
         public IQueryable<T> Collection()
         {
-            return items.AsQueryable(); 
+            return items.AsQueryable();
         }
 
         public void Delete(string id)
         {
-            T tDelete = items.Find(i => i.id == id); 
+            T tDelete = items.Find(i => i.id == id);
 
-            if(tDelete == null)
+            if (tDelete == null)
             {
                 throw new Exception(className + "Was Not Found");
             }
             else
             {
                 items.Remove(tDelete);
-                
+
             }
         }
     }
