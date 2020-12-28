@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MyEShop.Core.Contracts;
+using MyEShop.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,11 +10,36 @@ namespace MyEShop.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        IRepository<Product> context;
+        IRepository<ProductCategory> contextCategory;
+
+        public HomeController(IRepository<Product> product, IRepository<ProductCategory> productCategory)
         {
-            return View();
+            context = product;
+            contextCategory = productCategory;
         }
 
+        
+        public ActionResult Index()
+        {
+            List<Product> products = context.Collection().ToList();
+            return View(products);
+        }
+
+
+        public ActionResult Details(string id)
+        {
+            Product product = context.Find(id);
+            if(product == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                return View(product);
+            }
+
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
